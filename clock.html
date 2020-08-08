@@ -1,0 +1,151 @@
+<!doctype html>
+<html>
+<head>
+<style>
+#clockFrame{
+    position: absolute;
+    left: calc(50vw - 150px);
+    top: calc(50vh - 150px);
+    border: 1px solid;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: white;
+}
+.hand{
+  width: 2px;
+  position: absolute;
+}
+#hour{
+  height: 110px;
+  background: blue;
+  transform: translate(150px, 40px);
+  transform-origin: 0 110px;
+}
+#min{
+  height: 130px;
+  background: black;
+  transform: translate(150px, 20px);
+  transform-origin: 0 130px;
+}
+#sec{
+  height: 150px;
+  background: red;
+  transform: translate(150px);
+  transform-origin: 0 150px;
+}
+.num{
+  position: absolute;
+  transform-origin: 0 150px;
+}
+#num12{
+  transform: translate(150px);
+}
+#num11{
+  transform: translate(150px) rotate(-30deg);
+}
+#num10{
+  transform: translate(150px) rotate(-60deg);
+}
+#num9{
+  transform: translate(150px) rotate(-90deg);
+}
+#num8{
+  transform: translate(150px) rotate(-120deg);
+}
+#num7{
+  transform: translate(150px) rotate(-150deg);
+}
+#num6{
+  transform: translate(150px) rotate(180deg);
+}
+#num5{
+  transform: translate(150px) rotate(150deg);
+}
+#num4{
+  transform: translate(150px) rotate(120deg);
+}
+#num3{
+  transform: translate(150px) rotate(90deg);
+}
+#num2{
+  transform: translate(150px) rotate(60deg);
+  transform-origin: 0 150px;
+}
+#num1{
+  transform: translate(150px) rotate(30deg);
+}
+
+.night{
+  filter: invert(100%);
+}
+.night #hour, .night #sec{
+  filter: invert(100%);
+}
+</style>
+<script>
+var main = function()
+{
+    updateTimeDisplay();
+    setInterval("updateTimeDisplay()", 1000);
+}
+var updateTimeDisplay = function()
+{
+  var now = new Date().getTime();
+  var offset = window.location.hash.replace("#","");
+  if(offset == ""){ offset = 0;}
+  offset = parseFloat(offset);
+  nowAlt = now + offset*60*60*1000;
+
+  var x = new Date(nowAlt);
+  var h = x.getUTCHours();
+  var m = x.getUTCMinutes();
+  var s = x.getUTCSeconds();
+
+  var hdeg = (h%12)*30 + m*(30/60);
+  var mdeg = m * (360/60);
+  var sdeg = s * (360/60);
+
+ 
+  if(h > 6 && h <18){
+    document.getElementById("clockFrame").className = ""; 
+  }
+  else{
+    document.getElementById("clockFrame").className = "night"; 
+  }
+
+
+
+  document.getElementById("hour").style.transform = "translate(150px,40px) rotate(" + hdeg + "deg)";
+  document.getElementById("min").style.transform = "translate(150px,20px) rotate(" + mdeg + "deg)";
+  document.getElementById("sec").style.transform = "translate(150px) rotate(" + sdeg + "deg)";
+  
+}
+</script>
+</head>
+
+<body onload='main()'>
+  <div id='clockFrame'>
+    <div class='num' id='num1'> | </div>
+    <div class='num' id='num2'> | </div>
+    <div class='num' id='num3'> | </div>
+    <div class='num' id='num4'> | </div>
+    <div class='num' id='num5'> | </div>
+    <div class='num' id='num6'> | </div>
+    <div class='num' id='num7'> | </div>
+    <div class='num' id='num8'> | </div>
+    <div class='num' id='num9'> | </div>
+    <div class='num' id='num10'> | </div>
+    <div class='num' id='num11'> | </div>
+    <div class='num' id='num12'> | </div>
+
+    <div class='hand' id='hour'> </div>
+    <div class='hand' id='min'> </div>
+    <div class='hand' id='sec'> </div>
+
+  </div>
+</body>
+
+
+</html>
+
